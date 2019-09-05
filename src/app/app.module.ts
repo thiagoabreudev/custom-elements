@@ -3,11 +3,13 @@ import { NgModule, Injector } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgxMaskModule, IConfig} from 'ngx-mask';
 
 import { CsModalComponent } from './cs.modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CsModalFormComponent } from './cs-modal-form/cs-modal-form.component';
 import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     ReactiveFormsModule,
     NgbModule,
+    NgxMaskModule.forRoot(),
     HttpClientModule
   ],
   providers: [],

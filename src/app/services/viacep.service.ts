@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ViacepService {
 
-  private viacepUrl = 'https://viacep.com.br/ws/';
+  private viacepUrl = 'https://viacep.com.br/ws';
   constructor(private http: HttpClient) { }
 
   getAddress(cep) {
