@@ -7,6 +7,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CsModalComponent } from './cs.modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CsModalFormComponent } from './cs-modal-form/cs-modal-form.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { CsModalFormComponent } from './cs-modal-form/cs-modal-form.component';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule
   ],
   providers: [],
   entryComponents: [
@@ -27,7 +29,7 @@ import { CsModalFormComponent } from './cs-modal-form/cs-modal-form.component';
 export class AppModule {
   constructor(private injector: Injector) {
     const component = createCustomElement(CsModalComponent, {injector});
-    customElements.define('cs-modal', component)
+    customElements.define('cs-modal', component);
   }
 
   ngDoBootstrap() {}

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { CsModalFormComponent } from './cs-modal-form/cs-modal-form.component';
+import { ViacepService } from './services/viacep.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class CsModalComponent implements OnInit {
   @Input() origins: any;
   @Output() result = new EventEmitter<any>();
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private viaCepService: ViacepService) { }
   convertStringToObj(obj = []) {
     if (typeof obj === 'object') {
       return obj;
