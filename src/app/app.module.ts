@@ -9,7 +9,7 @@ import { CsModalComponent } from './cs.modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CsModalFormComponent } from './cs-modal-form/cs-modal-form.component';
 import { HttpClientModule } from '@angular/common/http';
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     NgbModule,
     NgxMaskModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [],
   entryComponents: [

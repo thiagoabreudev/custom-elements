@@ -26,7 +26,7 @@ export class CsModalComponent implements OnInit {
 
   open() {
     this.origins = this.convertStringToObj(this.origins);
-    const modalRef = this.modalService.open(CsModalFormComponent, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
+    const modalRef = this.modalService.open(CsModalFormComponent, { ariaLabelledBy: 'modal-basic-title', size: 'xl' });
     modalRef.componentInstance.origins = this.origins;
     modalRef
       .result.then((result) => {
