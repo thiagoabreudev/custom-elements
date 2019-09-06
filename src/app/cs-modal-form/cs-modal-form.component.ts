@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ViacepService } from '../services/viacep.service';
 
 @Component({
@@ -10,63 +10,44 @@ import { ViacepService } from '../services/viacep.service';
 })
 export class CsModalFormComponent implements OnInit {
   @Input() origins: any;
+  @Input() dropdownList: any = [];
   form: FormGroup;
-  dropdownList = [];
   selectedItems = [];
   dropdownSettings = {};
+  requiredMessage = 'Este campo é obrigatório';
 
   constructor(private formBuilder: FormBuilder, public activeModal: NgbActiveModal, private viaCepService: ViacepService) { }
 
   ngOnInit() {
     // Multselect
-    this.dropdownList = [
-      { item_id: 1, item_text: 'Mumbai' },
-      { item_id: 2, item_text: 'Bangaluru' },
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' },
-      { item_id: 5, item_text: 'New Delhi' },
-      { item_id: 1, item_text: 'Mumbai' },
-      { item_id: 2, item_text: 'Bangaluru' },
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' },
-      { item_id: 5, item_text: 'New Delhi' },
-      { item_id: 1, item_text: 'Mumbai' },
-      { item_id: 2, item_text: 'Bangaluru' },
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' },
-      { item_id: 5, item_text: 'New Delhi' },
-      { item_id: 1, item_text: 'Mumbai' },
-      { item_id: 2, item_text: 'Bangaluru' },
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' },
-      { item_id: 5, item_text: 'New Delhi' }
-    ];
     this.selectedItems = [
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' }
+
     ];
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
+      idField: 'id',
+      textField: 'description',
+      selectAllText: 'Selecione todos',
+      unSelectAllText: 'Desmarque todos',
+      searchPlaceholderText: 'Pesquisar...',
+      noDataAvailablePlaceholderText: 'Não existe dados para pesquisar',
       itemsShowLimit: 3,
       allowSearchFilter: true
     };
 
     this.form = this.formBuilder.group({
-      originId: [null],
-      name: [null],
-      zipCode: [null, { updateOn: 'blur' }],
-      address: [null],
-      addressNumber: [null],
-      addressNeighborhood: [null],
+      originId: [null, Validators.required],
+      name: [null, Validators.required],
+      zipCode: [null, {validators: Validators.required, updateOn: 'blur' }],
+      address: [null, Validators.required],
+      addressNumber: [null, Validators.required],
+      addressNeighborhood: [null, Validators.required],
       addressComplement: [null],
-      addressCity: [null],
-      addressState: [null],
-      modalities: [this.selectedItems]
+      addressCity: [null, Validators.required],
+      addressState: [null, Validators.required],
+      modalities: [this.selectedItems, Validators.required]
     });
+
     this.onChangeCep();
 
   }
@@ -76,7 +57,14 @@ export class CsModalFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.activeModal.close(this.form.value);
+    if (this.form.valid) {
+      this.activeModal.close(this.form.value);
+    } else {
+      Object.keys(this.form.controls).forEach(field => {
+        const control = this.form.get(field);
+        control.markAsTouched({ onlySelf: true });
+      });
+    }
   }
 
   onChangeCep() {
@@ -96,6 +84,13 @@ export class CsModalFormComponent implements OnInit {
 
   onSelectAll(items: any) {
     console.log(items);
+  }
+
+  getClass(field) {
+    if (this.form.get(field).invalid && (this.form.get(field).touched || this.form.get(field).dirty)) {
+      return 'is-invalid';
+    }
+    return '';
   }
 
 }

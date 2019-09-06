@@ -12,6 +12,7 @@ import { ViacepService } from './services/viacep.service';
 export class CsModalComponent implements OnInit {
   @Input() closeResult: string;
   @Input() origins: any;
+  @Input() modalities: any;
   @Output() result = new EventEmitter<any>();
 
   constructor(private modalService: NgbModal, private viaCepService: ViacepService) { }
@@ -26,8 +27,10 @@ export class CsModalComponent implements OnInit {
 
   open() {
     this.origins = this.convertStringToObj(this.origins);
+    this.modalities = this.convertStringToObj(this.modalities);
     const modalRef = this.modalService.open(CsModalFormComponent, { ariaLabelledBy: 'modal-basic-title', size: 'xl' });
     modalRef.componentInstance.origins = this.origins;
+    modalRef.componentInstance.dropdownList = this.modalities;
     modalRef
       .result.then((result) => {
         this.result.emit(result)
