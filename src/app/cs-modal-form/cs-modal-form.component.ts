@@ -23,6 +23,7 @@ export class CsModalFormComponent implements OnInit {
     this.selectedItems = [
 
     ];
+    this.formatDescriptionModalities();
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',
@@ -50,6 +51,12 @@ export class CsModalFormComponent implements OnInit {
 
     this.onChangeCep();
 
+  }
+
+  formatDescriptionModalities() {
+    for (const item of this.dropdownList) {
+      item.description = `${item.code}-${item.description}`;
+    }
   }
 
   closeModal() {
