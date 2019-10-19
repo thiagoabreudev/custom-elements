@@ -16,9 +16,10 @@ export class CsModalFormComponent implements OnInit {
   dropdownSettings = {};
   requiredMessage = 'Este campo é obrigatório';
 
-  constructor(private formBuilder: FormBuilder, public activeModal: NgbActiveModal, private viaCepService: ViacepService) { }
+  constructor (private formBuilder: FormBuilder, public activeModal: NgbActiveModal, private viaCepService: ViacepService) { }
 
   ngOnInit() {
+    this.origins = this.origins.sort((a, b) => a.originName < b.originName ? -1 : 1);
     // Multselect
     this.selectedItems = [
 
@@ -39,14 +40,18 @@ export class CsModalFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       originId: [null, Validators.required],
       name: [null, Validators.required],
-      zipCode: [null, {validators: Validators.required, updateOn: 'blur' }],
+      zipCode: [null, { validators: Validators.required, updateOn: 'blur' }],
       address: [null, Validators.required],
       addressNumber: [null, Validators.required],
       addressNeighborhood: [null, Validators.required],
       addressComplement: [null],
       addressCity: [null, Validators.required],
       addressState: [null, Validators.required],
-      modalities: [this.selectedItems, Validators.required]
+      modalities: [this.selectedItems, Validators.required],
+      phone1: [null],
+      phone2: [null],
+      email: [null],
+      site: [null]
     });
 
     this.onChangeCep();
@@ -57,6 +62,7 @@ export class CsModalFormComponent implements OnInit {
     for (const item of this.dropdownList) {
       item.description = `${item.code}-${item.description}`;
     }
+    this.dropdownList = this.dropdownList.sort((a, b) => a.description < b.description ? -1 : 1);
   }
 
   closeModal() {
